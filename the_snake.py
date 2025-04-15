@@ -1,7 +1,6 @@
 from random import choice, randrange
 import pygame
 
-
 # Константы для размеров поля и сетки:
 SCREEN_WIDTH, SCREEN_HEIGHT = 640, 480
 GRID_SIZE = 20
@@ -91,6 +90,7 @@ class Apple(GameObject):
         return GameObject.randomize_position(self)
 
     def draw(self):
+        """Метод, отрисовывающий объекты класса."""
         rect = pygame.Rect(self.position, (GRID_SIZE, GRID_SIZE))
         pygame.draw.rect(screen, self.body_color, rect)
         pygame.draw.rect(screen, BORDER_COLOR, rect, 1)
@@ -118,6 +118,7 @@ class Barriers(GameObject):
         return coordinates, rock_or_posion, color
 
     def draw(self):
+        """Метод, отрисовывающий объекты класса."""
         rect = pygame.Rect(self.position, (GRID_SIZE, GRID_SIZE))
         pygame.draw.rect(screen, self.body_color, rect)
         pygame.draw.rect(screen, BORDER_COLOR, rect, 1)
@@ -195,6 +196,7 @@ class Snake(GameObject):
             self.last = self.positions.pop(-1)
 
     def draw(self):
+        """Метод, отрисовывающий объекты класса."""
         for position in self.positions[:-1]:
             rect = pygame.Rect(position, (GRID_SIZE, GRID_SIZE))
             pygame.draw.rect(screen, self.body_color, rect)
@@ -345,6 +347,7 @@ def asp_bit_itself(asp):
 
 
 def main():
+    """Входная точка программы."""
     pygame.init()
 
     asp = Snake()
@@ -381,4 +384,5 @@ def main():
 
 
 if __name__ == '__main__':
+    """Запуск скрипта."""
     main()
