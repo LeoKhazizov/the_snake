@@ -1,5 +1,4 @@
 from random import choice, randrange
-
 import pygame
 
 
@@ -147,11 +146,11 @@ class Snake(GameObject):
         self.direction = RIGHT
         self.next_direction = None
         self.color_chart = [
-                            (255, 255, 0),
-                            (255, 0, 255),
-                            (0, 0, 255),
-                            (0, 255, 255)
-                            ]
+            (255, 255, 0),
+            (255, 0, 255),
+            (0, 0, 255),
+            (0, 255, 255)
+        ]
         self.body_color = self.pick_color()
 
     def pick_color(self):
@@ -168,30 +167,30 @@ class Snake(GameObject):
         """Метод движения змейки."""
         if self.direction == RIGHT:
             new_head_position = (
-                                self.positions[0][0] + GRID_SIZE,
-                                self.positions[0][1]
-                                )
+                self.positions[0][0] + GRID_SIZE,
+                self.positions[0][1]
+            )
             self.positions.insert(0, new_head_position)
             self.last = self.positions.pop(-1)
         elif self.direction == LEFT:
             new_head_position = (
-                                self.positions[0][0] - GRID_SIZE,
-                                self.positions[0][1]
-                                )
+                self.positions[0][0] - GRID_SIZE,
+                self.positions[0][1]
+            )
             self.positions.insert(0, new_head_position)
             self.last = self.positions.pop(-1)
         elif self.direction == DOWN:
             new_head_position = (
-                                self.positions[0][0],
-                                self.positions[0][1] + GRID_SIZE
-                                )
+                self.positions[0][0],
+                self.positions[0][1] + GRID_SIZE
+            )
             self.positions.insert(0, new_head_position)
             self.last = self.positions.pop(-1)
         elif self.direction == UP:
             new_head_position = (
-                                self.positions[0][0],
-                                self.positions[0][1] - GRID_SIZE
-                                )
+                self.positions[0][0],
+                self.positions[0][1] - GRID_SIZE
+            )
             self.positions.insert(0, new_head_position)
             self.last = self.positions.pop(-1)
 
