@@ -1,4 +1,5 @@
 from random import choice, randrange
+
 import pygame
 
 
@@ -87,6 +88,7 @@ class Apple(GameObject):
         self.position = self.set_position()
 
     def set_position(self):
+        """Метод, задающий случайную позицию."""
         return GameObject.randomize_position(self)
 
     def draw(self):
@@ -110,6 +112,7 @@ class Barriers(GameObject):
         self.position, self.barrier_type, self.body_color = self.set_values()
 
     def set_values(self):
+        """Метод, задающий случайную позицию, тип и цвет объекта."""
         coordinates = GameObject.randomize_position(self)
         rock_or_posion = choice(['rock', 'poison'])
         color = POISON_COLOR if rock_or_posion == 'poison' else ROCK_COLOR
@@ -143,7 +146,12 @@ class Snake(GameObject):
         self.last = None
         self.direction = RIGHT
         self.next_direction = None
-        self.color_chart = [(255, 255, 0), (255, 0, 255), (0, 0, 255), (0, 255, 255)]
+        self.color_chart = [
+                            (255, 255, 0),
+                            (255, 0, 255),
+                            (0, 0, 255),
+                            (0, 255, 255)
+                            ]
         self.body_color = self.pick_color()
 
     def pick_color(self):
@@ -151,6 +159,7 @@ class Snake(GameObject):
         return choice(self.color_chart)
 
     def update_direction(self):
+        """Метод, обновляющий текущее направление движения."""
         if self.next_direction:
             self.direction = self.next_direction
             self.next_direction = None
@@ -158,19 +167,31 @@ class Snake(GameObject):
     def move(self):
         """Метод движения змейки."""
         if self.direction == RIGHT:
-            new_head_position = (self.positions[0][0] + GRID_SIZE, self.positions[0][1])
+            new_head_position = (
+                                self.positions[0][0] + GRID_SIZE,
+                                self.positions[0][1]
+                                )
             self.positions.insert(0, new_head_position)
             self.last = self.positions.pop(-1)
         elif self.direction == LEFT:
-            new_head_position = (self.positions[0][0] - GRID_SIZE, self.positions[0][1])
+            new_head_position = (
+                                self.positions[0][0] - GRID_SIZE,
+                                self.positions[0][1]
+                                )
             self.positions.insert(0, new_head_position)
             self.last = self.positions.pop(-1)
         elif self.direction == DOWN:
-            new_head_position = (self.positions[0][0], self.positions[0][1] + GRID_SIZE)
+            new_head_position = (
+                                self.positions[0][0],
+                                self.positions[0][1] + GRID_SIZE
+                                )
             self.positions.insert(0, new_head_position)
             self.last = self.positions.pop(-1)
         elif self.direction == UP:
-            new_head_position = (self.positions[0][0], self.positions[0][1] - GRID_SIZE)
+            new_head_position = (
+                                self.positions[0][0],
+                                self.positions[0][1] - GRID_SIZE
+                                )
             self.positions.insert(0, new_head_position)
             self.last = self.positions.pop(-1)
 
@@ -189,6 +210,7 @@ class Snake(GameObject):
             pygame.draw.rect(screen, BOARD_BACKGROUND_COLOR, last_rect)
 
     def get_head_position(self):
+        """Метод определяющий положение головы змейки."""
         return self.positions[0]
 
     def reset(self):
@@ -268,25 +290,25 @@ def eat_apple(asp, apple):
         new_segment = (head_x - GRID_SIZE, head_y)
         asp.positions.insert(1, new_segment)
         asp.length += 1
-        for i in asp.positions[asp.length - 1 : 1 : -1]:
+        for i in asp.positions[asp.length - 1:1:-1]:
             i = (i[0] - GRID_SIZE, i[1])
     elif asp.direction == LEFT:
         new_segment = (head_x + GRID_SIZE, head_y)
         asp.positions.insert(1, new_segment)
         asp.length += 1
-        for i in asp.positions[asp.length - 1 : 1 : -1]:
+        for i in asp.positions[asp.length - 1:1:-1]:
             i = (i[0] + GRID_SIZE, i[1])
     elif asp.direction == UP:
         new_segment = (head_x, head_y - GRID_SIZE)
         asp.positions.insert(1, new_segment)
         asp.length += 1
-        for i in asp.positions[asp.length - 1 : 1 : -1]:
+        for i in asp.positions[asp.length - 1:1:-1]:
             i = (i[0], i[1] - GRID_SIZE)
     elif asp.direction == DOWN:
         new_segment = (head_x, head_y + GRID_SIZE)
         asp.positions.insert(1, new_segment)
         asp.length += 1
-        for i in asp.positions[asp.length - 1 : 1 : -1]:
+        for i in asp.positions[asp.length - 1:1:-1]:
             i = (i[0], i[1] + GRID_SIZE)
     eaten_apple = pygame.Rect(apple.position, (GRID_SIZE, GRID_SIZE))
     pygame.draw.rect(screen, BOARD_BACKGROUND_COLOR, eaten_apple)
