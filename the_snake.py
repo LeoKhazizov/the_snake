@@ -185,7 +185,7 @@ class Snake(GameObject):
         # Атрибут позиции последних сегментом переделан в список.
         # Чтобы можно было удалять несколько элементов.
         # Это нужно при столкновении с камнем.
-        self.last = []
+        self.last = [None]
         self.direction = RIGHT
         self.next_direction = None
         self.color_chart = [
@@ -261,7 +261,7 @@ class Snake(GameObject):
         """Метод сброса змейки в исходное состояние."""
         self.length = 1
         self.positions = [((SCREEN_WIDTH // 2), (SCREEN_HEIGHT // 2))]
-        self.last = []
+        self.last = [None]
         self.body_color = self.pick_color()
         self.direction = choice((UP, DOWN, LEFT, RIGHT))
 
