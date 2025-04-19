@@ -334,7 +334,7 @@ def main():
     taken_spots = [asp.position]
 
     apple = Apple(taken_spots)
-    taken_spots = taken_spots + [apple.position]
+    taken_spots += [apple.position]
 
     barrier_one = Barriers(taken_spots)
     taken_spots += [barrier_one.position]
@@ -381,7 +381,7 @@ def main():
 
             # Новый экзепляр не создаю, так нужна только новая позиция.
             apple.position = apple.randomize_position(taken_spots)
-            taken_spots = taken_spots.append(apple.position)
+            taken_spots += [apple.position]
 
             # Создаю именно новые объекты, чтобы изменить и тип, и позицию.
             barrier_one = Barriers(taken_spots)
