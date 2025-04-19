@@ -69,7 +69,7 @@ class GameObject:
         self.position = ((SCREEN_WIDTH // 2), (SCREEN_HEIGHT // 2))
         self.body_color = None
 
-    def randomize_position(self, taken_spots = []):
+    def randomize_position(self, taken_spots=[]):
         """Метод, используемый в дочерних классах.
 
         Создает случайные координаты объекту.
@@ -97,7 +97,7 @@ class Apple(GameObject):
             Те же, что у родителя GameObject.
     """
 
-    def __init__(self, taken_spots = []):
+    def __init__(self, taken_spots=[]):
         """Инициализатор класса.
 
         Задаёт значения:
@@ -107,7 +107,7 @@ class Apple(GameObject):
         Переменную, нужную для правильного определния позиции.
         """
         self.body_color = APPLE_COLOR
-        self.position = self.randomize_position(taken_spots = [])
+        self.position = self.randomize_position(taken_spots=[])
 
     def draw(self):
         """Метод, отрисовывающий объекты класса."""
@@ -126,7 +126,7 @@ class Barriers(GameObject):
             barrier_type: определяет тип препятствия.
     """
 
-    def __init__(self, taken_spots = []):
+    def __init__(self, taken_spots=[]):
         """Инициализатор класса.
 
         Задаёт значения:
@@ -137,7 +137,7 @@ class Barriers(GameObject):
         Переменную, нужную для правильного определния позиции.
         """
         self.barrier_type, self.body_color = self.set_values()
-        self.position = self.randomize_position(taken_spots = [])
+        self.position = self.randomize_position(taken_spots=[])
 
     def set_values(self):
         """Метод, задающий тип и цвет объекта."""
