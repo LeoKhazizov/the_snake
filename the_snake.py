@@ -185,7 +185,7 @@ class Snake(GameObject):
         # Атрибут позиции последних сегментом переделан в список.
         # Чтобы можно было удалять несколько элементов.
         # Это нужно при столкновении с камнем.
-        self.last = [None]
+        self.last = []
         self.direction = RIGHT
         self.next_direction = None
         self.color_chart = [
@@ -261,7 +261,7 @@ class Snake(GameObject):
         """Метод сброса змейки в исходное состояние."""
         self.length = 1
         self.positions = [((SCREEN_WIDTH // 2), (SCREEN_HEIGHT // 2))]
-        self.last = [None]
+        self.last = []
         self.body_color = self.pick_color()
         self.direction = choice((UP, DOWN, LEFT, RIGHT))
 
@@ -305,13 +305,12 @@ def update_taken_spots(asp, apple, bar_one, bar_two, bar_three):
 
 def has_snake_eaten(asp, apple, taken_spots):
     """Функция, проверяющая не съела ли змейка яблоко.
-
+    
     В случае столкновения вызывает соответсвующий метод змейки.
     """
     if apple.position == asp.get_head_position():
         asp.eat_apple()
         apple.position = apple.randomize_position(taken_spots)
-
 
 def has_snake_crashed(asp, bar_one, bar_two, bar_three, taken_spots):
     """Функция, проверяющая, врезалась ли змейка в барьер.
@@ -330,10 +329,8 @@ def main():
     """Создаем скрипт, собирая вместе вышеописанные элементы."""
     pg.init()
 
-    taken_spots = []
-
     asp = Snake()
-    taken_spots.append(asp.position)
+    taken_spots = [asp.position]
 
     apple = Apple(taken_spots)
     taken_spots.append(apple.position)
@@ -379,8 +376,7 @@ def main():
 
         if asp.get_head_position() in asp.positions[1:]:
             asp.reset()
-            taken_spots = []
-            taken_spots.append(asp.position)
+            taken_spots = [asp.position]
 
             # Новый экзепляр не создаю, так нужна только новая позиция.
             apple.position = apple.randomize_position(taken_spots)
