@@ -185,7 +185,7 @@ class Snake(GameObject):
         # Атрибут позиции последних сегментом переделан в список.
         # Чтобы можно было удалять несколько элементов.
         # Это нужно при столкновении с камнем.
-        self.last = []
+        self.last = [None]
         self.direction = RIGHT
         self.next_direction = None
         self.color_chart = [
@@ -218,7 +218,7 @@ class Snake(GameObject):
         if self.length < len(self.positions):
             self.last = [self.positions.pop()]
         else:
-            self.last = []
+            self.last = [None]
 
     def eat_apple(self):
         """Метод позволяющий змейке есть яблоки."""
@@ -244,7 +244,7 @@ class Snake(GameObject):
 
     def draw(self):
         """Метод, отрисовывающий объекты класса."""
-        if self.last:
+        if self.last[0]:
             for position in self.last:
                 last_rect = pg.Rect(position, (GRID_SIZE, GRID_SIZE))
                 pg.draw.rect(screen, BOARD_BACKGROUND_COLOR, last_rect)
@@ -261,7 +261,7 @@ class Snake(GameObject):
         """Метод сброса змейки в исходное состояние."""
         self.length = 1
         self.positions = [((SCREEN_WIDTH // 2), (SCREEN_HEIGHT // 2))]
-        self.last = []
+        self.last = [None]
         self.body_color = self.pick_color()
         self.direction = choice((UP, DOWN, LEFT, RIGHT))
 
@@ -291,7 +291,8 @@ def asp_bit_itself(asp):
 
 def update_taken_spots(asp, apple, bar_one, bar_two, bar_three):
     """Функция, обновляющая список занятых мест."""
-    updated_taken_spots = []
+    updated_taken_spots = [None]
+    updated_taken_spots.remove(None)
     for position in asp.positions:
         updated_taken_spots.append(position)
     updated_taken_spots.extend([
@@ -305,12 +306,13 @@ def update_taken_spots(asp, apple, bar_one, bar_two, bar_three):
 
 def has_snake_eaten(asp, apple, taken_spots):
     """Функция, проверяющая не съела ли змейка яблоко.
-    
+
     В случае столкновения вызывает соответсвующий метод змейки.
     """
     if apple.position == asp.get_head_position():
         asp.eat_apple()
         apple.position = apple.randomize_position(taken_spots)
+
 
 def has_snake_crashed(asp, bar_one, bar_two, bar_three, taken_spots):
     """Функция, проверяющая, врезалась ли змейка в барьер.
