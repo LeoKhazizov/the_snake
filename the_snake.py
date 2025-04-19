@@ -69,12 +69,12 @@ class GameObject:
         self.position = ((SCREEN_WIDTH // 2), (SCREEN_HEIGHT // 2))
         self.body_color = None
 
-    def randomize_position(self, taken_spots = 'default'):
+    def randomize_position(self, taken_spots='default'):
         """Метод, используемый в дочерних классах.
 
         Создает случайные координаты объекту.
         """
-        if taken_spots != 'default': 
+        if taken_spots != 'default':
             while True:
                 position = (
                     randrange(GRID_SIZE, SCREEN_WIDTH, GRID_SIZE),
@@ -83,12 +83,10 @@ class GameObject:
                 if position not in taken_spots:
                     return position
         else:
-            position = (
+            return (
                 randrange(GRID_SIZE, SCREEN_WIDTH, GRID_SIZE),
                 randrange(GRID_SIZE, SCREEN_HEIGHT, GRID_SIZE),
             )
-            return position
-
 
     def draw(self):
         """Пустой метод, переопредленный в дочерних классах.
@@ -105,7 +103,7 @@ class Apple(GameObject):
             Те же, что у родителя GameObject.
     """
 
-    def __init__(self, taken_spots = 'default'):
+    def __init__(self, taken_spots='default'):
         """Инициализатор класса.
 
         Задаёт значения:
@@ -134,7 +132,7 @@ class Barriers(GameObject):
             barrier_type: определяет тип препятствия.
     """
 
-    def __init__(self, taken_spots = 'default'):
+    def __init__(self, taken_spots='default'):
         """Инициализатор класса.
 
         Задаёт значения:
