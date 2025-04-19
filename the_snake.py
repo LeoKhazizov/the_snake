@@ -185,7 +185,7 @@ class Snake(GameObject):
         # Атрибут позиции последних сегментом переделан в список.
         # Чтобы можно было удалять несколько элементов.
         # Это нужно при столкновении с камнем.
-        self.last = [None]
+        self.last = []
         self.direction = RIGHT
         self.next_direction = None
         self.color_chart = [
@@ -218,7 +218,7 @@ class Snake(GameObject):
         if self.length < len(self.positions):
             self.last = [self.positions.pop()]
         else:
-            self.last = [None]
+            self.last = []
 
     def eat_apple(self):
         """Метод позволяющий змейке есть яблоки."""
@@ -244,7 +244,7 @@ class Snake(GameObject):
 
     def draw(self):
         """Метод, отрисовывающий объекты класса."""
-        if self.last[0]:
+        if self.last:
             for position in self.last:
                 last_rect = pg.Rect(position, (GRID_SIZE, GRID_SIZE))
                 pg.draw.rect(screen, BOARD_BACKGROUND_COLOR, last_rect)
@@ -261,7 +261,7 @@ class Snake(GameObject):
         """Метод сброса змейки в исходное состояние."""
         self.length = 1
         self.positions = [((SCREEN_WIDTH // 2), (SCREEN_HEIGHT // 2))]
-        self.last = [None]
+        self.last = []
         self.body_color = self.pick_color()
         self.direction = choice((UP, DOWN, LEFT, RIGHT))
 
@@ -291,8 +291,7 @@ def asp_bit_itself(asp):
 
 def update_taken_spots(asp, apple, bar_one, bar_two, bar_three):
     """Функция, обновляющая список занятых мест."""
-    updated_taken_spots = [None]
-    updated_taken_spots.remove(None)
+    updated_taken_spots = []
     for position in asp.positions:
         updated_taken_spots.append(position)
     updated_taken_spots.extend([
@@ -335,14 +334,14 @@ def main():
     taken_spots = [asp.position]
 
     apple = Apple(taken_spots)
-    taken_spots.append(apple.position)
+    taken_spots = taken_spots + [apple.position]
 
     barrier_one = Barriers(taken_spots)
-    taken_spots.append(barrier_one.position)
+    taken_spots += [barrier_one.position]
     barrier_two = Barriers(taken_spots)
-    taken_spots.append(barrier_two.position)
+    taken_spots += [barrier_two.position]
     barrier_three = Barriers(taken_spots)
-    taken_spots.append(barrier_three.position)
+    taken_spots += [barrier_three.position]
 
     while True:
         clock.tick(SPEED)
@@ -382,15 +381,15 @@ def main():
 
             # Новый экзепляр не создаю, так нужна только новая позиция.
             apple.position = apple.randomize_position(taken_spots)
-            taken_spots.append(apple.position)
+            taken_spots = taken_spots.append(apple.position)
 
             # Создаю именно новые объекты, чтобы изменить и тип, и позицию.
             barrier_one = Barriers(taken_spots)
-            taken_spots.append(barrier_one.position)
+            taken_spots += [barrier_one.position]
             barrier_two = Barriers(taken_spots)
-            taken_spots.append(barrier_two.position)
+            taken_spots += [barrier_two.position]
             barrier_three = Barriers(taken_spots)
-            taken_spots.append(barrier_three.position)
+            taken_spots += [barrier_three.position]
 
             screen.fill(BOARD_BACKGROUND_COLOR)
 
